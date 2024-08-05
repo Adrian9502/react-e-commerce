@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.hammersmith-one {
+  font-family: "Hammersmith One", sans-serif !important;
+}
+
+.header {
+  background-color: #0e153a !important;
+}
+.product-card {
+  background-color: #e2f3f5 !important;
+}
+.button {
+  background-color: #3d5af1 !important;
+}
