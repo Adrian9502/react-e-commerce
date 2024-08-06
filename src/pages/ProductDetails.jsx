@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Circles } from "react-loader-spinner";
-import Header from "../components/Header";
-import StarRating from "../components/StarRating";
 import { addToCart, removeFromCart } from "../store/slices/cart-slice";
 import { useSelector, useDispatch } from "react-redux";
+import { Rating } from "@mui/material";
 export default function ProductDetails() {
   const { id } = useParams(); // Get product ID from URL
   const [product, setProduct] = useState(null);
@@ -50,7 +49,6 @@ export default function ProductDetails() {
 
   return (
     <>
-      <Header />
       <div className="min-h-[90vh] mt-20 justify-center flex items-start pt-20 px-48">
         {loading ? (
           <div className="flex justify-center items-center h-[80vh]">
@@ -82,7 +80,7 @@ export default function ProductDetails() {
               </p>
               <div className="flex items-center justify-start flex-wrap">
                 <p className="text-sm italic p-0 rounded-md text-gray-500">
-                  Category:{" "}
+                  Category:
                 </p>
                 {product.tags.map((tag, index) => (
                   <p
@@ -95,8 +93,12 @@ export default function ProductDetails() {
               </div>
               {/* rating,shipping,delivery days section */}
               <div className="flex gap-3 flex-col 2xl:flex-row xl:flex-row items-center justify-center  lg:justify-start my-4 ">
-                <StarRating rating={product.rating} />
-                {product.rating.rate}
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={product.rating}
+                  precision={0.5}
+                  readOnly
+                />
                 <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
                   {product.warrantyInformation}
                 </span>
