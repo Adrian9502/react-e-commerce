@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Circles } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 import { addToCart, removeFromCart } from "../store/slices/cart-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { Rating } from "@mui/material";
@@ -48,88 +48,95 @@ export default function ProductDetails() {
   }, [id]);
 
   return (
-    <>
-      <div className="min-h-[90vh] mt-20 justify-center flex items-start pt-20 px-48">
-        {loading ? (
-          <div className="flex justify-center items-center h-[80vh]">
-            <Circles
-              height={"80"}
-              width={"80"}
-              color="rgb(67 56 202)"
-              visible={true}
+    <div className="min-h-[90vh] bg-slate-300 justify-center flex items-start pt-20 px-48">
+      {loading ? (
+        <div className="flex justify-center items-center h-[80vh]">
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={[
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+            ]}
+          />
+        </div>
+      ) : // product container
+      product ? (
+        <div className="bg-white min-w-[70vh] p-3 h-auto w-full rounded-md shadow-lg flex justify-center flex-col lg:flex-row  items-start">
+          <div className="h-[400px]  mx-auto">
+            <img
+              src={product.thumbnail}
+              alt={product.title}
+              className="rounded-md object-cover h-[400px]"
             />
           </div>
-        ) : // product container
-        product ? (
-          <div className="bg-white min-w-[70vh] p-3 h-auto w-full rounded-md shadow-lg flex justify-center flex-col lg:flex-row  items-start">
-            <div className="h-[400px]  mx-auto">
-              <img
-                src={product.thumbnail}
-                alt={product.title}
-                className="rounded-md object-cover h-[400px]"
-              />
-            </div>
-            {/* description section */}
-            <div className="lg:w-[50%] px-2 text-center lg:text-start ">
-              <h1 className="text-center text-lg   lg:text-4xl my-6 font-bold md:text-2xl">
-                {product.title}
-              </h1>
+          {/* description section */}
+          <div className="lg:w-[50%] px-2 text-center lg:text-start ">
+            <h1 className="text-center text-lg   lg:text-4xl my-6 font-bold md:text-2xl">
+              {product.title}
+            </h1>
 
-              <p className="text-base font-semibold text-gray-900  md:text-base lg:text-lg">
-                {product.description}
+            <p className="text-base font-semibold text-gray-900  md:text-base lg:text-lg">
+              {product.description}
+            </p>
+            <div className="flex items-center justify-start flex-wrap">
+              <p className="text-sm italic p-0 rounded-md text-gray-500">
+                Category:
               </p>
-              <div className="flex items-center justify-start flex-wrap">
-                <p className="text-sm italic p-0 rounded-md text-gray-500">
-                  Category:
-                </p>
-                {product.tags.map((tag, index) => (
-                  <p
-                    key={index}
-                    className="text-sm italic p-0 rounded-md ml-1 text-gray-500"
-                  >
-                    {tag}.
-                  </p>
-                ))}
-              </div>
-              {/* rating,shipping,delivery days section */}
-              <div className="flex gap-3 flex-col 2xl:flex-row xl:flex-row items-center justify-center  lg:justify-start my-4 ">
-                <Rating
-                  name="half-rating-read"
-                  defaultValue={product.rating}
-                  precision={0.5}
-                  readOnly
-                />
-                <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
-                  {product.warrantyInformation}
-                </span>
-                <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
-                  {product.shippingInformation}
-                </span>
-              </div>
-              <p className="text-lg text-center lg:text-3xl font-bold ">
-                ${product.price}
-              </p>
-
-              <div className="flex items-center justify-center w-full mt-5">
-                <button
-                  onClick={
-                    cart.some((item) => item.id === product.id)
-                      ? handleRemoveFromCart
-                      : handleAddToCart
-                  }
-                  className="button text-slate-100 hover:text-slate-300 border-2 rounded-lg font-bold p-3 md:mb-3"
+              {product.tags.map((tag, index) => (
+                <p
+                  key={index}
+                  className="text-sm italic p-0 rounded-md ml-1 text-gray-500"
                 >
-                  {cart.some((item) => item.id === product.id)
-                    ? "Remove from cart"
-                    : "Add to cart"}
-                </button>
-              </div>
+                  {tag}.
+                </p>
+              ))}
+            </div>
+            {/* rating,shipping,delivery days section */}
+            <div className="flex gap-3 flex-col 2xl:flex-row xl:flex-row items-center justify-center  lg:justify-start my-4 ">
+              <Rating
+                name="half-rating-read"
+                defaultValue={product.rating}
+                precision={0.5}
+                readOnly
+              />
+              <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
+                {product.warrantyInformation}
+              </span>
+              <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
+                {product.shippingInformation}
+              </span>
+            </div>
+            <p className="text-lg text-center lg:text-3xl font-bold ">
+              ${product.price}
+            </p>
+
+            <div className="flex items-center justify-center w-full mt-5">
+              <button
+                onClick={
+                  cart.some((item) => item.id === product.id)
+                    ? handleRemoveFromCart
+                    : handleAddToCart
+                }
+                className="button text-slate-100 hover:text-slate-300 border-2 rounded-lg font-bold p-3 md:mb-3"
+              >
+                {cart.some((item) => item.id === product.id)
+                  ? "Remove from cart"
+                  : "Add to cart"}
+              </button>
             </div>
           </div>
-        ) : (
-          <div>No product found</div>
-        )}
-      </div>
-    </>
+        </div>
+      ) : (
+        <div>No product found</div>
+      )}
+    </div>
   );
 }

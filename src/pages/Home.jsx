@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Circles } from "react-loader-spinner";
+import { ColorRing } from "react-loader-spinner";
 import ProductTile from "../components/ProductTile";
 
 export default function Home() {
@@ -57,11 +57,20 @@ export default function Home() {
     <main className="bg-slate-300">
       {loading ? (
         <div className="min-h-screen w-full flex justify-center items-center">
-          <Circles
-            height={"80"}
-            width={"80"}
-            color="rgb(20 184 166)"
+          <ColorRing
             visible={true}
+            height="80"
+            width="80"
+            ariaLabel="color-ring-loading"
+            wrapperStyle={{}}
+            wrapperClass="color-ring-wrapper"
+            colors={[
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+              "rgb(20 184 166)",
+            ]}
           />
         </div>
       ) : (
