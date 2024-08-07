@@ -25,7 +25,6 @@ export default function Home() {
 
       if (result && result.products && result.products.length) {
         setProducts((prevData) => [...prevData, ...result.products]);
-        console.log(products);
 
         // Determine if there are more products to load
         if (result.products.length < 20) {

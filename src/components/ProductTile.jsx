@@ -59,7 +59,7 @@ export default function ProductTile({ product }) {
           precision={0.5}
           readOnly
         />
-        <span className=" italic">({product.rating})</span>
+        <span className="italic">({product.rating})</span>
       </div>
       {/* View Details and add to cart */}
       <div className="flex items-center justify-center w-full space-x-4 p-3">

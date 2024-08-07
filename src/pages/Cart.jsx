@@ -12,37 +12,34 @@ export default function Cart() {
   }, [cart]);
 
   return (
-    <div className="bg-slate-300 min-h-[80vh] justify-center flex flex-col items-center py-10">
+    <div className="bg-slate-300 min-h-[90vh] flex flex-col items-center py-10 px-4">
       {cart && cart.length ? (
-        <div className="max-w-7xl justify-between w-full flex flex-col md:flex-row">
-          {/* products in cart */}
-          <div className="flex flex-col w-[800px] max-h-[80vh] overflow-auto justify-start p-5">
+        <div className="max-w-7xl w-full m-auto flex flex-col md:flex-row gap-4">
+          {/* Products in cart */}
+          <div className="flex-1 overflow-auto max-h-[80vh] p-4 md:p-5 rounded-lg">
             {cart.map((cartItem) => (
               <CartTile key={cartItem.id} cartItem={cartItem} />
             ))}
           </div>
-          {/* cart container */}
-          <div className="max-w-[500px] m-auto flex items-center justify-center">
-            {/* cart summary */}
-            <div className="bg-white w-[400px] h-[400px] p-5 rounded-lg shadow-lg mt-5 md:mt-0">
-              <h1 className="text-2xl font-bold text-gray-800 mb-4">
-                Cart Summary
-              </h1>
-              <p className="text-lg mb-2">
-                <span className="font-semibold">Total Items:</span>{" "}
-                {cart.length}
-              </p>
-              <p className="text-lg mb-4">
-                <span className="font-semibold">Total Amount:</span> $
-                {totalCart.toFixed(2)}
-              </p>
-            </div>
+          {/* Cart summary */}
+          <div className="w-full md:w-1/3 text-gray-800 h-auto m-auto bg-white p-4 md:p-5 rounded-lg shadow-lg">
+            <h1 className="text-xl md:text-2xl text-center font-bold  mb-4">
+              Cart Summary
+            </h1>
+            <p className="text-base md:text-lg mb-2 ml-6">
+              <span className="font-semibold">Total Items: </span>
+              <span className="font-bold">{cart.length}</span>
+            </p>
+            <p className="text-base md:text-lg mb-2 ml-6">
+              <span className="font-semibold">Total Amount: </span>
+              <span className="font-bold">${totalCart.toFixed(2)}</span>
+            </p>
           </div>
         </div>
       ) : (
-        // if cart is empty
+        // If cart is empty
         <div className="flex flex-col items-center justify-center flex-1 space-y-4">
-          <h1 className="text-gray-800 italic text-2xl font-bold mb-2">
+          <h1 className="text-xl md:text-2xl text-gray-800 italic font-bold mb-2">
             Your cart is empty.
           </h1>
           <Link to={"/"}>
