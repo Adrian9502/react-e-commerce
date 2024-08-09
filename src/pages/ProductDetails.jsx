@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import { addToCart, removeFromCart } from "../store/slices/cart-slice";
 import { useSelector, useDispatch } from "react-redux";
 import { Rating } from "@mui/material";
+import { motion } from "framer-motion";
+
 export default function ProductDetails() {
   const { id } = useParams(); // Get product ID from URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
-
-  // Access only the cart state from Redux
   const cart = useSelector((state) => state.cart);
 
   // Function to handle adding the product to the cart
@@ -35,8 +34,6 @@ export default function ProductDetails() {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        console.log(data);
-
         setProduct(data);
       } catch (error) {
         console.error("Failed to fetch product details:", error);
@@ -47,6 +44,13 @@ export default function ProductDetails() {
 
     fetchProductDetails();
   }, [id]);
+
+  // Animation variants
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: 0.5 } },
+    exit: { opacity: 0, transition: { duration: 0.5 } },
+  };
 
   return (
     <div className="min-h-[90vh] px-10 bg-slate-300 justify-center flex flex-col items-center">
@@ -67,9 +71,14 @@ export default function ProductDetails() {
             ]}
           />
         </div>
-      ) : // product container
-      product ? (
-        <div className="bg-slate-50 mt-10 max-w-6xl p-3 h-auto w-full rounded-md shadow-lg ">
+      ) : product ? (
+        <motion.div
+          className="bg-slate-50 mt-10 max-w-6xl p-3 h-auto w-full rounded-md shadow-lg"
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          variants={variants}
+        >
           {/* products */}
           <div className="flex justify-center flex-row items-center">
             {/* image */}
@@ -81,15 +90,14 @@ export default function ProductDetails() {
               />
             </div>
             {/* description section */}
-            <div className="flex flex-col flex-1 px-2 text-center justify-center lg:text-start ">
+            <div className="flex flex-col flex-1 px-2 text-center justify-center lg:text-start">
               <h1 className="text-center text-lg lg:text-4xl my-6 font-bold md:text-2xl">
                 {product.title}
               </h1>
-
-              <p className="text-base  font-semibold text-gray-900  md:text-base lg:text-lg">
+              <p className="text-base font-semibold text-gray-900 md:text-base lg:text-lg">
                 {product.description}
               </p>
-              <div className="flex items-center justify-center  flex-wrap">
+              <div className="flex items-center justify-center flex-wrap">
                 <p className="text-sm italic p-0 rounded-md text-gray-500">
                   Tags:
                 </p>
@@ -98,7 +106,6 @@ export default function ProductDetails() {
                     <p className="text-sm italic p-0 rounded-md ml-1 text-gray-500">
                       {tag}
                     </p>
-                    {/* Conditionally render comma only if it's not the last tag */}
                     {index < product.tags.length - 1 && (
                       <span className="text-sm italic p-0 rounded-md ml-1 text-gray-500">
                         ,
@@ -107,10 +114,8 @@ export default function ProductDetails() {
                   </React.Fragment>
                 ))}
               </div>
-              {/* rating,shipping,delivery days section */}
               <div className="flex flex-col items-center justify-around my-2 lg:flex-row gap-3">
-                {/* rating */}
-                <div className="flex flex-col-reverse items-center ">
+                <div className="flex flex-col-reverse items-center">
                   <Rating
                     name="half-rating-read"
                     defaultValue={product.rating}
@@ -128,10 +133,9 @@ export default function ProductDetails() {
                   {product.shippingInformation}
                 </div>
               </div>
-              <p className="text-lg text-center md:text-2xl lg:text-3xl font-bold ">
+              <p className="text-lg text-center md:text-2xl lg:text-3xl font-bold">
                 ${product.price}
               </p>
-
               <div className="flex items-center justify-center w-full mt-5">
                 <button
                   onClick={
@@ -149,11 +153,15 @@ export default function ProductDetails() {
             </div>
           </div>
           {/* Reviews section */}
-          <div className="bg-slate-300 mx-3 lg:mx-10 p-4 mt-5 rounded-md">
+          <motion.div
+            className="bg-slate-300 mx-3 lg:mx-10 p-4 mt-5 rounded-md"
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={variants}
+          >
             <h1 className="text-2xl text-center font-bold mb-4">Reviews</h1>
-            {/* reviews container */}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
-              {/* Added flex-wrap and gap for spacing */}
               {product.reviews.length > 0 ? (
                 product.reviews.map((review, index) => (
                   <div
@@ -163,7 +171,6 @@ export default function ProductDetails() {
                     <div className="p-1">
                       <div className="flex items-center justify-around">
                         <div className="w-fit">
-                          {/* Profile picture */}
                           <img
                             src={`https://randomuser.me/api/portraits/men/${
                               index % 10
@@ -201,10 +208,9 @@ export default function ProductDetails() {
                 <p className="text-gray-500">No reviews yet.</p>
               )}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       ) : (
-        // if product id doesn't exist
         <div className="flex items-center justify-center flex-col p-3 gap-5 m-auto">
           <h1 className="text-2xl font-semibold italic">No product found.</h1>
           <Link to={"/"}>
