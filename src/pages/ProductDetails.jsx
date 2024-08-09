@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import { addToCart, removeFromCart } from "../store/slices/cart-slice";
 import { useSelector, useDispatch } from "react-redux";
@@ -48,7 +49,7 @@ export default function ProductDetails() {
   }, [id]);
 
   return (
-    <div className="min-h-[90vh] bg-slate-300 justify-center flex items-start pt-20 px-48">
+    <div className="min-h-[90vh] px-10 bg-slate-300 justify-center flex flex-col items-center">
       {loading ? (
         <div className="flex justify-center items-center h-[80vh]">
           <ColorRing
@@ -56,7 +57,6 @@ export default function ProductDetails() {
             height="80"
             width="80"
             ariaLabel="color-ring-loading"
-            wrapperStyle={{}}
             wrapperClass="color-ring-wrapper"
             colors={[
               "rgb(20 184 166)",
@@ -69,73 +69,150 @@ export default function ProductDetails() {
         </div>
       ) : // product container
       product ? (
-        <div className="bg-white min-w-[70vh] p-3 h-auto w-full rounded-md shadow-lg flex justify-center flex-col lg:flex-row  items-start">
-          <div className="h-[400px]  mx-auto">
-            <img
-              src={product.thumbnail}
-              alt={product.title}
-              className="rounded-md object-cover h-[400px]"
-            />
-          </div>
-          {/* description section */}
-          <div className="lg:w-[50%] px-2 text-center lg:text-start ">
-            <h1 className="text-center text-lg   lg:text-4xl my-6 font-bold md:text-2xl">
-              {product.title}
-            </h1>
-
-            <p className="text-base font-semibold text-gray-900  md:text-base lg:text-lg">
-              {product.description}
-            </p>
-            <div className="flex items-center justify-start flex-wrap">
-              <p className="text-sm italic p-0 rounded-md text-gray-500">
-                Category:
-              </p>
-              {product.tags.map((tag, index) => (
-                <p
-                  key={index}
-                  className="text-sm italic p-0 rounded-md ml-1 text-gray-500"
-                >
-                  {tag}.
-                </p>
-              ))}
-            </div>
-            {/* rating,shipping,delivery days section */}
-            <div className="flex gap-3 flex-col 2xl:flex-row xl:flex-row items-center justify-center  lg:justify-start my-4 ">
-              <Rating
-                name="half-rating-read"
-                defaultValue={product.rating}
-                precision={0.5}
-                readOnly
+        <div className="bg-slate-50 mt-10 max-w-6xl p-3 h-auto w-full rounded-md shadow-lg ">
+          {/* products */}
+          <div className="flex justify-center flex-row items-center">
+            {/* image */}
+            <div className="h-[350px] max-w-[50%] flex flex-1 items-center justify-center">
+              <img
+                src={product.thumbnail}
+                alt={product.title}
+                className="rounded-md object-contain h-full"
               />
-              <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
-                {product.warrantyInformation}
-              </span>
-              <span className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
-                {product.shippingInformation}
-              </span>
             </div>
-            <p className="text-lg text-center lg:text-3xl font-bold ">
-              ${product.price}
-            </p>
+            {/* description section */}
+            <div className="flex flex-col flex-1 px-2 text-center justify-center lg:text-start ">
+              <h1 className="text-center text-lg lg:text-4xl my-6 font-bold md:text-2xl">
+                {product.title}
+              </h1>
 
-            <div className="flex items-center justify-center w-full mt-5">
-              <button
-                onClick={
-                  cart.some((item) => item.id === product.id)
-                    ? handleRemoveFromCart
-                    : handleAddToCart
-                }
-                className="button text-slate-100 hover:text-slate-300 border-2 rounded-lg font-bold p-3 md:mb-3"
-              >
-                {cart.some((item) => item.id === product.id)
-                  ? "Remove from cart"
-                  : "Add to cart"}
-              </button>
+              <p className="text-base  font-semibold text-gray-900  md:text-base lg:text-lg">
+                {product.description}
+              </p>
+              <div className="flex items-center justify-center  flex-wrap">
+                <p className="text-sm italic p-0 rounded-md text-gray-500">
+                  Tags:
+                </p>
+                {product.tags.map((tag, index) => (
+                  <React.Fragment key={index}>
+                    <p className="text-sm italic p-0 rounded-md ml-1 text-gray-500">
+                      {tag}
+                    </p>
+                    {/* Conditionally render comma only if it's not the last tag */}
+                    {index < product.tags.length - 1 && (
+                      <span className="text-sm italic p-0 rounded-md ml-1 text-gray-500">
+                        ,
+                      </span>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+              {/* rating,shipping,delivery days section */}
+              <div className="flex flex-col items-center justify-around my-2 lg:flex-row gap-3">
+                {/* rating */}
+                <div className="flex flex-col-reverse items-center ">
+                  <Rating
+                    name="half-rating-read"
+                    defaultValue={product.rating}
+                    precision={0.5}
+                    readOnly
+                  />
+                  <span className="font-semibold italic">
+                    Rating: {product.rating}
+                  </span>
+                </div>
+                <div className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
+                  {product.warrantyInformation}
+                </div>
+                <div className="text-base text-center font-semibold md:text-base lg:text-lg italic border border-indigo-600 rounded-md px-3 text-indigo-800">
+                  {product.shippingInformation}
+                </div>
+              </div>
+              <p className="text-lg text-center md:text-2xl lg:text-3xl font-bold ">
+                ${product.price}
+              </p>
+
+              <div className="flex items-center justify-center w-full mt-5">
+                <button
+                  onClick={
+                    cart.some((item) => item.id === product.id)
+                      ? handleRemoveFromCart
+                      : handleAddToCart
+                  }
+                  className="bg-teal-500 text-white rounded-lg font-semibold lg:py-3 lg:px-6 hover:bg-teal-600 hover:text-slate-200 transition duration-300 px-3 py-2"
+                >
+                  {cart.some((item) => item.id === product.id)
+                    ? "Remove from cart"
+                    : "Add to cart"}
+                </button>
+              </div>
+            </div>
+          </div>
+          {/* Reviews section */}
+          <div className="bg-slate-300 mx-3 lg:mx-10 p-4 mt-5 rounded-md">
+            <h1 className="text-2xl text-center font-bold mb-4">Reviews</h1>
+            {/* reviews container */}
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 md:grid-cols-2">
+              {/* Added flex-wrap and gap for spacing */}
+              {product.reviews.length > 0 ? (
+                product.reviews.map((review, index) => (
+                  <div
+                    key={index}
+                    className="p-4 bg-slate-100 shadow-md rounded-md flex items-start space-x-4 flex-shrink-0 w-full sm:w-auto"
+                  >
+                    <div className="p-1">
+                      <div className="flex items-center justify-around">
+                        <div className="w-fit">
+                          {/* Profile picture */}
+                          <img
+                            src={`https://randomuser.me/api/portraits/men/${
+                              index % 10
+                            }.jpg`} // Placeholder image URL
+                            alt="Profile"
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
+                        </div>
+                        <div className="w-[70%] flex flex-col">
+                          <span className="text-sm italic text-gray-600 mt-1">
+                            {review.date.split("T")[0]}
+                          </span>
+                          <span className="text-md font-bold text-gray-800">
+                            {review.reviewerName}
+                          </span>
+                          <span className="text-sm italic truncate text-gray-500">
+                            {review.reviewerEmail}
+                          </span>
+                          <Rating
+                            name="review-rating"
+                            defaultValue={review.rating}
+                            precision={0.5}
+                            readOnly
+                            size="medium"
+                          />
+                        </div>
+                      </div>
+                      <p className="text-base break-all w-full text-gray-700 mt-2">
+                        {review.comment}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No reviews yet.</p>
+              )}
             </div>
           </div>
         </div>
       ) : (
-        <div>No product found</div>
+        // if product id doesn't exist
+        <div className="flex items-center justify-center flex-col p-3 gap-5 m-auto">
+          <h1 className="text-2xl font-semibold italic">No product found.</h1>
+          <Link to={"/"}>
+            <button className="bg-teal-500 text-white rounded-lg font-semibold py-3 px-6 hover:bg-teal-600 hover:text-slate-200 transition duration-300">
+              GO BACK
+            </button>
+          </Link>
+        </div>
       )}
     </div>
   );
