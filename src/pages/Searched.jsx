@@ -35,7 +35,7 @@ function Searched() {
   }, [params.search]);
 
   return (
-    <main className="bg-zinc-300">
+    <main className="bg-slate-300">
       {loading ? (
         <div className="min-h-screen w-full flex justify-center items-center">
           <Circles
