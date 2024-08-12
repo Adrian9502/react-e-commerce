@@ -24,3 +24,15 @@ An e-commerce website built with React, Tailwind CSS, and Redux for state manage
 - **Product Details:** Click on a product to see detailed information and manage cart actions.
 - **Search:** Use the search bar to find specific products.
 - **Cart:** Access the Cart page to view and manage items, and see the total amount.
+
+## Images
+
+![Overview](./img.png)
+![Overview](./img1.png)
+![Overview](./img2.png)
+![Overview](./img3.png)
+![Overview](./img4.png)
+
+## GIF
+
+![Overview](./gif.gif)
