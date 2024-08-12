@@ -1,8 +1,26 @@
-# React + Vite
+# E-Commerce Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+An e-commerce website built with React, Tailwind CSS, and Redux for state management. This app allows users to browse products, search for items, view details, and manage a shopping cart. The website is fully responsive.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+
+- **Home Page:** Displays products from various categories.
+- **Category Browse:** Filter products by category.
+- **Product Details:** View detailed information, ratings, prices, and add/remove items from the cart.
+- **Search:** Find products by name.
+- **Cart:** Manage cart items and view the total price.
+
+## Tech Stack
+
+- **Frontend:** React, Tailwind CSS, Framer Motion, React Splide, Material UI, Headless UI
+- **State Management:** Redux
+- **API:** DummyJSON for product data
+
+## Usage
+
+- **Home Page:** Explore all products or filter by category.
+- **Product Details:** Click on a product to see detailed information and manage cart actions.
+- **Search:** Use the search bar to find specific products.
+- **Cart:** Access the Cart page to view and manage items, and see the total amount.
