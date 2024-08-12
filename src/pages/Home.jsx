@@ -2,6 +2,16 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ColorRing } from "react-loader-spinner";
 import ProductTile from "../components/ProductTile";
+import Beauty from "../components/Category/Beauty";
+import Fragrances from "../components/Category/Fragrances";
+import Furniture from "../components/Category/Furniture";
+import Groceries from "../components/Category/Groceries";
+import HomeDecor from "../components/Category/HomeDecor";
+import KitchenAcc from "../components/Category/KitchenAcc";
+import Laptops from "../components/Category/Laptops";
+import MenShirt from "../components/Category/MenShirt";
+import MenWatches from "../components/Category/MenWatches";
+import MobileAcc from "../components/Category/MobileAcc";
 
 export default function Home() {
   const { category } = useParams(); // Get category slug from URL
@@ -54,7 +64,22 @@ export default function Home() {
   };
 
   return (
-    <main className="bg-slate-300">
+    <main className="bg-slate-300 py-12">
+      {/* components for categories */}
+      <Beauty />
+      <Fragrances />
+      <Furniture />
+      <Groceries />
+      <HomeDecor />
+      <KitchenAcc />
+      <Laptops />
+      <MenShirt />
+      <MenWatches />
+      <MobileAcc />
+      <h1 className="text-center py-4 font-bold text-gray-800 text-2xl ">
+        Browse all products
+      </h1>
+
       {loading ? (
         <div className="min-h-screen w-full flex justify-center items-center">
           <ColorRing
@@ -86,6 +111,7 @@ export default function Home() {
           )}
         </div>
       )}
+
       {/* Conditionally render the button container */}
       {products.length >= 20 && !loading && (
         <div className="text-center p-4">
