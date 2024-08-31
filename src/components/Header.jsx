@@ -54,7 +54,7 @@ export default function Header({ onSearch }) {
       <Link to={"/"}>
         <div className="ml-5 w-auto flex gap-2 items-center">
           <img src={logo} className="w-10 md:w-11 lg:w-14" alt="logo" />
-          <h1 className="text-slate-100 cursor-pointer tracking-wide italic font-bold text-xl sm:text-2xl md:text-2xl md:block lg:block">
+          <h1 className="text-slate-100 cursor-pointer tracking-wide italic font-bold text-xl sm:text-2xl md:text-2xl hidden sm:block md:block lg:block">
             QuickBuy
           </h1>
         </div>
